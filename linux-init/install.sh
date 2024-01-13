@@ -14,7 +14,7 @@ install_for_rhel_family(){
   #yum install xorg-x11-xauth xorg-x11-fonts-* xorg-x11-font-utils xorg-x11-fonts-Type1 -y
   yum group install base-x -y
   echo "installing some advanced tools"
-  yum install gparted nm-connection-editor firewall-config cloud-utils-growpart xfsprogs -y
+  yum install gparted nm-connection-editor firewall-config cloud-utils-growpart xfsprogs trash-cli timeshift -y
   echo "installing welcome message"
   cat <<EOT > /etc/motd
 ░██████╗██╗░░░██╗███╗░░██╗░█████╗░██████╗░░█████╗░░██████╗░██████╗
