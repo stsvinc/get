@@ -4,8 +4,8 @@ set -e
 echo "installing Docker"
 
 postgres_install_dnf(){
-  read -p "Enter your name: " name
-  echo "Hello $name"
+  name=$PASSWD
+  echo "Hello $name $PASSWD"
   exit;
   #1 First, disable the built-in  **PostgreSQL**  module by running the following  [dnf command](https://www.tecmint.com/dnf-commands-for-fedora-rpm-package-management/).
   sudo dnf -qy module disable postgresql
