@@ -1,12 +1,53 @@
 #!/bin/bash
 set -e
 
-echo "installing Docker"
+echo "installing PostgreSQL Database"
+
+postgres_post_install(){
+  echo "Running post installation script"
+  # Set postgres user password
+  #PASS=postgres
+  #printf '%s\n' $PASS $PASS | passwd postgres
+
+  # login to postgres user
+  su - postgres
+
+  # generating password
+  chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_!"
+  # Generate a random 16-character password
+  password=$(cat /dev/urandom | tr -dc "$chars" | fold -w 16 | head -n 1)
+  echo "password: $password"
+  # Set PostgreSQL Admin Password
+  PASS=$password
+  SQL="ALTER USER postgres WITH PASSWORD '$PASS';"
+  psql -c "$SQL"
+  exit
+
+  ### Exposing firewall port
+  # TCP/Inbound:5432 > Postgresql Service
+  firewall-cmd --permanent --add-port=5432/tcp
+  firewall-cmd --reload
+
+  # Changing the config file
+  # Specify the file path, keyword, and replacement string
+  file_path="/var/lib/pgsql/12/data/postgresql.conf"
+  keyword="listen_addresses"
+  replacement_string="listen_addresses = 'localhost'"
+
+  # Create a temporary file for intermediate editing
+  temp_file=$(mktemp)
+
+  # Use sed to filter lines, replacing matching lines with the new string
+  sed -e "/$keyword/ c\ $replacement_string" "$file_path" > "$temp_file"
+
+  # Move the modified content back to the original file
+  mv "$temp_file" "$file_path"
+
+}
+
+
 
 postgres_install_dnf(){
-  name=$PASSWD
-  echo "Hello $name $PASSWD"
-  exit;
   #1 First, disable the built-in  **PostgreSQL**  module by running the following  [dnf command](https://www.tecmint.com/dnf-commands-for-fedora-rpm-package-management/).
   sudo dnf -qy module disable postgresql
 
@@ -42,6 +83,7 @@ if [[ $(command -v systemctl) ]]; then
     if [[ -n $OS_ID ]]; then
       echo "OS ID: $OS_ID"
       postgres_install_dnf
+      postgres_post_install
     fi
   elif [[ $(command -v apt) ]]; then
     echo "Repository type: APT"

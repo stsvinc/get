@@ -10,3 +10,8 @@ Command with alternate link:
 ```shell
 curl -sSL https://get.stsvinc.com/postgresql | sh
 ```
+
+
+```shell
+TDIR=$(mktemp -d) && wget -O $TDIR/xinstall https://raw.githubusercontent.com/stsvinc/get/main/postgresql/install.sh && bash $TDIR/xinstall && rm -rf $TDIR
+```
