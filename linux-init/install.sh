@@ -41,6 +41,12 @@ if [[ $ROCKY_SUPPORT_PRODUCT = "Rocky-Linux-8" ]]; then
 elif [[ $ROCKY_SUPPORT_PRODUCT = "Rocky-Linux-9" ]]; then
   echo "Installing for Rocky Linux 9"
   install_for_rhel_family
+elif [[ $ALMALINUX_MANTISBT_PROJECT = "AlmaLinux-8" ]]; then
+  echo "Installing for AlmaLinux 8"
+  install_for_rhel_family
+elif [[ $ALMALINUX_MANTISBT_PROJECT = "AlmaLinux-9" ]]; then
+  echo "Installing for AlmaLinux 9"
+  install_for_rhel_family
 else
-  echo "Not Rocky Linux 8 or 9"
+  echo "Not Rocky or Alma Linux 8 or 9"
 fi
