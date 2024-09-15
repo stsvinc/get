@@ -1,7 +1,7 @@
-!/bin/bash
+#!/bin/bash
 
 # Get the directory where the script is located
-SCRIPT_DIR=$(dirname "$0")
+#SCRIPT_DIR=$(dirname "$0")
 
 # Define the paths for the PID and certificate files in the script's directory
 #PID_FILE="$SCRIPT_DIR/.sstpc_vpn.pid"
