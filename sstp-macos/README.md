@@ -1,5 +1,11 @@
 To install certbotod directly form online script you can just copy and paste the following command and execute.
 
+before giving Installation command execute this two command:
+```
+brew install wget
+brew install sstp-client
+```
+
 Installation command:
 ```shell
 curl -sSL https://raw.githubusercontent.com/stsvinc/get/main/sstp-macos/install.sh | sh
